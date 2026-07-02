@@ -4,24 +4,26 @@ function App() {
 
   const [page, setPage] = React.useState("dashboard");
 
-const invitados = [
-  { nombre: "Loyda", familia: "Leo", confirmado: false },
-  { nombre: "Jose", familia: "Leo", confirmado: true },
-  { nombre: "Judith", familia: "Leo", confirmado: false },
-  { nombre: "Wilberth", familia: "Leo", confirmado: false },
-  { nombre: "Rubi", familia: "Leo", confirmado: true }
-];
-
+  // 👇 Invitados (SOLO UNA VEZ)
   const invitados = [
     { nombre: "Loyda", familia: "Leo", confirmado: false },
-    { nombre: "Jose", familia: "Leo", confirmado: false },
-    { nombre: "Judith", familia: "Leo", confirmado: false }
+    { nombre: "Jose", familia: "Leo", confirmado: true },
+    { nombre: "Judith", familia: "Leo", confirmado: false },
+    { nombre: "Wilberth", familia: "Leo", confirmado: false },
+    { nombre: "Rubi", familia: "Leo", confirmado: true }
   ];
-const total = invitados.length;
 
-const confirmados = invitados.filter(i => i.confirmado).length;
+  // 👇 Stats ahora SÍ definidos (antes faltaban)
+  const stats = {
+    fisicas: 18,
+    digitales: 8,
+    recuerdos: 30
+  };
 
-const pendientes = total - confirmados;
+  const total = invitados.length;
+  const confirmados = invitados.filter(i => i.confirmado).length;
+  const pendientes = total - confirmados;
+
   function getCountdown() {
     const weddingDate = new Date("2027-03-13");
     const now = new Date();
@@ -81,32 +83,32 @@ const pendientes = total - confirmados;
           <h1 style={styles.title}>Invitados 👥</h1>
 
           <div style={styles.table}>
-  {invitados.map((i, index) => (
-    <div key={index} style={styles.row}>
+            {invitados.map((i, index) => (
+              <div key={index} style={styles.row}>
 
-      <span>{i.nombre}</span>
-      <span>{i.familia}</span>
+                <span>{i.nombre}</span>
+                <span>{i.familia}</span>
 
-      <button
-        onClick={() => {
-          invitados[index].confirmado = !invitados[index].confirmado;
-          window.location.reload();
-        }}
-        style={{
-          padding: "5px 10px",
-          borderRadius: "6px",
-          border: "none",
-          cursor: "pointer",
-          background: i.confirmado ? "green" : "#ccc",
-          color: "white"
-        }}
-      >
-        {i.confirmado ? "Confirmado" : "Pendiente"}
-      </button>
+                <button
+                  onClick={() => {
+                    invitados[index].confirmado = !invitados[index].confirmado;
+                    window.location.reload();
+                  }}
+                  style={{
+                    padding: "5px 10px",
+                    borderRadius: "6px",
+                    border: "none",
+                    cursor: "pointer",
+                    background: i.confirmado ? "green" : "#ccc",
+                    color: "white"
+                  }}
+                >
+                  {i.confirmado ? "Confirmado" : "Pendiente"}
+                </button>
 
-    </div>
-  ))}
-</div>
+              </div>
+            ))}
+          </div>
         </>
       );
     }
