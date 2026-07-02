@@ -11,7 +11,13 @@ const invitados = [
   { nombre: "Wilberth", familia: "Leo", confirmado: false },
   { nombre: "Rubi", familia: "Leo", confirmado: true }
 ];
- const total = invitados.length;
+
+  const invitados = [
+    { nombre: "Loyda", familia: "Leo", confirmado: false },
+    { nombre: "Jose", familia: "Leo", confirmado: false },
+    { nombre: "Judith", familia: "Leo", confirmado: false }
+  ];
+const total = invitados.length;
 
 const confirmados = invitados.filter(i => i.confirmado).length;
 
