@@ -190,10 +190,8 @@ function Grupos() {
   id: Date.now(),
   representante: "Nuevo grupo",
   familia: "Sin familia",
-  lado: "Leo",
-  personas: [
-  { nombre: "Persona 1", confirmado: false }
-],
+  lado: "Leo", // 👈 aquí se puede cambiar luego
+  personas: [{ nombre: "Persona 1", confirmado: false }],
   invitacion: "fisica"
 };
 
@@ -244,12 +242,45 @@ function Grupos() {
       {/* PANEL */}
       {selected && (
         <div style={styles.panel}>
-          <button
-            style={styles.closeBtn}
-            onClick={() => setSelected(null)}
-          >
-            ✕ Cerrar
-          </button>
+          <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
+
+  <button
+    onClick={() => {
+      const nuevos = grupos.filter(g => g.id !== selected.id);
+      setGrupos(nuevos);
+      setSelected(null);
+    }}
+    style={{
+      flex: 1,
+      padding: "10px",
+      borderRadius: "10px",
+      border: "none",
+      background: "#ef4444",
+      color: "white",
+      fontWeight: "600",
+      cursor: "pointer"
+    }}
+  >
+    🗑 Eliminar grupo
+  </button>
+
+  <button
+    onClick={() => setSelected(null)}
+    style={{
+      flex: 1,
+      padding: "10px",
+      borderRadius: "10px",
+      border: "1px solid #d1d5db",
+      background: "#ffffff",
+      color: "#111827",
+      fontWeight: "600",
+      cursor: "pointer"
+    }}
+  >
+    ✕ Cerrar
+  </button>
+
+</div>
 
           <input
             value={selected.representante}
@@ -263,8 +294,54 @@ function Grupos() {
             }}
           />
 
-          <p style={{ color: "#4b5563" }}>{selected.familia}</p>
-<p style={{ color: "#4b5563" }}>Lado: {selected.lado}</p>
+          <input
+  value={selected.familia}
+  onChange={(e) =>
+    updateGrupo({ familia: e.target.value })
+  }
+  style={{
+    ...styles.input,
+    fontWeight: "600"
+  }}
+  placeholder="Apellido o familia"
+/>
+<h4 style={{ marginTop: "10px" }}>Lado</h4>
+
+<div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+
+  <button
+    onClick={() => updateGrupo({ lado: "Leo" })}
+    style={{
+      flex: 1,
+      padding: "10px",
+      borderRadius: "10px",
+      border: "1px solid #d1d5db",
+      background: selected.lado === "Leo" ? "#dbeafe" : "#fff",
+      color: selected.lado === "Leo" ? "#1d4ed8" : "#374151",
+      cursor: "pointer",
+      fontWeight: "600"
+    }}
+  >
+    Leo
+  </button>
+
+  <button
+    onClick={() => updateGrupo({ lado: "Gema" })}
+    style={{
+      flex: 1,
+      padding: "10px",
+      borderRadius: "10px",
+      border: "1px solid #d1d5db",
+      background: selected.lado === "Gema" ? "#fce7f3" : "#fff",
+      color: selected.lado === "Gema" ? "#be185d" : "#374151",
+      cursor: "pointer",
+      fontWeight: "600"
+    }}
+  >
+    Gema
+  </button>
+
+</div>
           <h4 style={{ marginTop: "15px", color: "#111827" }}>
   Tipo de invitación
 </h4>

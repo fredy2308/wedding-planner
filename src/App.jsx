@@ -2,29 +2,29 @@ import React from "react";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Grupos from "./pages/Grupos/Grupos";
+import Mesas from "./pages/Mesas/Mesas";
 
 function App() {
   const [page, setPage] = React.useState("dashboard");
 
   // 👇 Invitados
-  const invitados = [
-    { nombre: "Loyda", familia: "Leo", confirmado: false },
-    { nombre: "Jose", familia: "Leo", confirmado: true },
-    { nombre: "Judith", familia: "Leo", confirmado: false },
-    { nombre: "Wilberth", familia: "Leo", confirmado: false },
-    { nombre: "Rubi", familia: "Leo", confirmado: true }
-  ];
+ const gruposGuardados = JSON.parse(localStorage.getItem("grupos")) || [];
 
-  // 👇 Stats
-  const stats = {
-    fisicas: 18,
-    digitales: 8,
-    recuerdos: 30
-  };
+// todas las personas
+const todasLasPersonas = gruposGuardados.flatMap(g => g.personas || []);
 
-  const total = invitados.length;
-  const confirmados = invitados.filter(i => i.confirmado).length;
-  const pendientes = total - confirmados;
+// total
+const total = todasLasPersonas.length;
+
+// confirmados
+const confirmados = todasLasPersonas.filter(p => p.confirmado).length;
+
+// pendientes
+const pendientes = total - confirmados;
+
+// invitaciones
+const totalFisicas = gruposGuardados.filter(g => g.invitacion === "fisica").length;
+const totalDigitales = gruposGuardados.filter(g => g.invitacion === "digital").length;
 
   function getCountdown() {
     const weddingDate = new Date("2027-03-13");
@@ -36,50 +36,15 @@ function App() {
 
   function renderPage() {
     if (page === "dashboard") {
-      return (
-        <>
-          <h1 style={styles.title}>Dashboard</h1>
-          <p style={styles.subtitle}>Organización de la boda</p>
-
-          <div style={styles.cards}>
-            <div style={styles.card}>
-              <h3>Total invitados</h3>
-              <p>{total}</p>
-            </div>
-
-            <div style={styles.card}>
-              <h3>Confirmados</h3>
-              <p>{confirmados}</p>
-            </div>
-
-            <div style={styles.card}>
-              <h3>Pendientes</h3>
-              <p>{pendientes}</p>
-            </div>
-
-            <div style={styles.card}>
-              <h3>Invitaciones físicas</h3>
-              <p>{stats.fisicas}</p>
-            </div>
-
-            <div style={styles.card}>
-              <h3>Invitaciones digitales</h3>
-              <p>{stats.digitales}</p>
-            </div>
-
-            <div style={styles.card}>
-              <h3>Recuerdos</h3>
-              <p>{stats.recuerdos}</p>
-            </div>
-          </div>
-        </>
-      );
-    }
+  return <Dashboard />;
+}
 
     if (page === "grupos") {
       return <Grupos />;
     }
-
+if (page === "mesas") {
+  return <Mesas />;
+}
     if (page === "invitados") {
       return (
         <>
@@ -180,13 +145,19 @@ if (page === "invitaciones") {
 
 const styles = {
   page: {
-    width: "100vw",
+  width: "100%",
     minHeight: "100vh",
     display: "flex",
     fontFamily: "'Segoe UI', sans-serif",
     background: "#f7f3ef"
   },
-  main: { flex: 1, padding: "30px" },
+  main: {
+  flex: 1,
+  padding: "30px",
+  minWidth: 0,
+  overflowX: "hidden",
+  overflowY: "auto"
+},
   header: {
     marginBottom: "25px",
     padding: "18px",
