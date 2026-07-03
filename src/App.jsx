@@ -114,23 +114,29 @@ function App() {
       );
     }
 
-    if (page === "invitaciones") {
-      return (
-        <>
-          <h1 style={styles.title}>Invitaciones 💌</h1>
+if (page === "invitaciones") {
 
-          <div style={styles.card}>
-            <h3>Físicas</h3>
-            <p>{stats.fisicas}</p>
-          </div>
+  const gruposGuardados = JSON.parse(localStorage.getItem("grupos")) || [];
 
-          <div style={styles.card}>
-            <h3>Digitales</h3>
-            <p>{stats.digitales}</p>
-          </div>
-        </>
-      );
-    }
+  const totalFisicas = gruposGuardados.filter(g => g.invitacion === "fisica").length;
+  const totalDigitales = gruposGuardados.filter(g => g.invitacion === "digital").length;
+
+  return (
+    <>
+      <h1 style={styles.title}>Invitaciones 💌</h1>
+
+      <div style={styles.card}>
+        <h3>Físicas</h3>
+        <p>{totalFisicas}</p>
+      </div>
+
+      <div style={styles.card}>
+        <h3>Digitales</h3>
+        <p>{totalDigitales}</p>
+      </div>
+    </>
+  );
+}
 
     if (page === "mesas") {
       return <h1 style={styles.title}>Mesas 🪑 (en construcción)</h1>;
