@@ -433,39 +433,27 @@ border: p.confirmado ? "1px solid #86efac" : "1px solid #e5e7eb"
         updateGrupo({ personas: nuevas });
       }}
     />
-    {/* RECUERDO */}
-<input
-  type="checkbox"
-  checked={p.recuerdo}
-  onChange={() => {
-    const nuevas = [...selected.personas];
+   {/* RECUERDO */}
+<div style={{ display: "flex", alignItems: "center", gap: "6px", marginRight: "10px" }}>
+  <input
+    type="checkbox"
+    checked={p.recuerdo}
+    onChange={() => {
+      const nuevas = [...selected.personas];
 
-    nuevas[i] = {
-      ...nuevas[i],
-      recuerdo: !nuevas[i].recuerdo
-    };
+      nuevas[i] = {
+        ...nuevas[i],
+        recuerdo: !nuevas[i].recuerdo
+      };
 
-    updateGrupo({ personas: nuevas });
-  }}
-/>
-<span style={{ fontSize: "12px", marginRight: "10px" }}>
-  🎁 Recuerdo
-</span>
-<input
-  type="checkbox"
-  checked={p.recuerdo}
-  onChange={() => {
-    const nuevas = [...selected.personas];
+      updateGrupo({ personas: nuevas });
+    }}
+  />
 
-    nuevas[i] = {
-      ...nuevas[i],
-      recuerdo: !nuevas[i].recuerdo
-    };
-
-    updateGrupo({ personas: nuevas });
-  }}
-  title="Lleva recuerdo 🎁"
-/>
+  <span style={{ fontSize: "12px" }}>
+    🎁 Recuerdo
+  </span>
+</div>
     {/* NOMBRE */}
    <input
   value={p.nombre}
