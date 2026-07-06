@@ -127,44 +127,43 @@ function Grupos() {
       cursor: "pointer",
       transition: "0.2s"
     },
+name: {
+  margin: 0,
+  fontSize: "18px",
+  fontWeight: "700",
+  color: "#111827"
+},
 
-    name: {
-      margin: 0,
-      fontSize: "18px",
-      fontWeight: "700",
-      color: "#111827"
-    },
-
-   subtitle: {
+subtitle: {
   margin: "6px 0",
   color: "#4b5563",
   fontSize: "13px"
 },
 
-    panel: {
-      position: "fixed",
-      right: 0,
-      top: 0,
-      width: "380px",
-      height: "100vh",
-      background: "#ffffff",
-      boxShadow: "-10px 0 30px rgba(0,0,0,0.12)",
-      padding: "22px",
-      borderTopLeftRadius: "18px",
-      borderBottomLeftRadius: "18px"
-    },
+panel: {
+  position: "fixed",
+  right: 0,
+  top: 0,
+  width: "420px",
+  height: "100vh",
+  background: "#ffffff",
+  padding: "20px",
+  overflowY: "auto",   // 👈 scroll
+  boxShadow: "-10px 0 25px rgba(0,0,0,0.15)",
+  zIndex: 1000
+},   // 👈 ESTA COMA FALTABA
 
-    closeBtn: {
-      background: "#f43f5e",
-      color: "white",
-      border: "none",
-      padding: "8px 12px",
-      borderRadius: "10px",
-      cursor: "pointer",
-      fontWeight: "600"
-    },
+closeBtn: {
+  background: "#f43f5e",
+  color: "white",
+  border: "none",
+  padding: "8px 12px",
+  borderRadius: "10px",
+  cursor: "pointer",
+  fontWeight: "600"
+},
 
-    input: {
+input: {
       width: "100%",
       padding: "10px 12px",
       borderRadius: "10px",
