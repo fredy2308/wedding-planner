@@ -9,18 +9,38 @@ function Grupos() {
       ...g,
       invitacion: g.invitacion ?? "fisica",
       personas: g.personas.map(p =>
-        typeof p === "string"
-          ? { nombre: p, confirmado: false }
-          : p
-      )
+  typeof p === "string"
+  ? {
+      nombre: p,
+      confirmado: false,
+      recuerdo: false,
+      recuerdoEntregado: false
+    }
+  : {
+    ...p,
+    confirmado: p.confirmado ?? false,
+    recuerdo: p.recuerdo ?? false,
+    recuerdoEntregado: p.recuerdoEntregado ?? false
+  }
+)
     }))
   : gruposData.map(g => ({
       ...g,
       personas: g.personas.map(p =>
-        typeof p === "string"
-          ? { nombre: p, confirmado: false }
-          : p
-      )
+  typeof p === "string"
+  ? {
+      nombre: p,
+      confirmado: false,
+      recuerdo: false,
+      recuerdoEntregado: false
+    }
+    : {
+    ...p,
+    confirmado: p.confirmado ?? false,
+    recuerdo: p.recuerdo ?? false,
+    recuerdoEntregado: p.recuerdoEntregado ?? false
+  }
+)
     }));
   });
 
@@ -413,18 +433,62 @@ border: p.confirmado ? "1px solid #86efac" : "1px solid #e5e7eb"
         updateGrupo({ personas: nuevas });
       }}
     />
+    {/* RECUERDO */}
+<input
+  type="checkbox"
+  checked={p.recuerdo}
+  onChange={() => {
+    const nuevas = [...selected.personas];
 
+    nuevas[i] = {
+      ...nuevas[i],
+      recuerdo: !nuevas[i].recuerdo
+    };
+
+    updateGrupo({ personas: nuevas });
+  }}
+/>
+<span style={{ fontSize: "12px", marginRight: "10px" }}>
+  🎁 Recuerdo
+</span>
+<input
+  type="checkbox"
+  checked={p.recuerdo}
+  onChange={() => {
+    const nuevas = [...selected.personas];
+
+    nuevas[i] = {
+      ...nuevas[i],
+      recuerdo: !nuevas[i].recuerdo
+    };
+
+    updateGrupo({ personas: nuevas });
+  }}
+  title="Lleva recuerdo 🎁"
+/>
     {/* NOMBRE */}
-    <span
-      style={{
-        flex: 1,
-        textDecoration: "none",
-        color: p.confirmado ? "#166534" : "#111827",
-fontWeight: "500"
-      }}
-    >
-      {p.nombre}
-    </span>
+   <input
+  value={p.nombre}
+  onChange={(e) => {
+    const nuevas = [...selected.personas];
+
+    nuevas[i] = {
+      ...nuevas[i],
+      nombre: e.target.value
+    };
+
+    updateGrupo({ personas: nuevas });
+  }}
+  style={{
+    flex: 1,
+    padding: "8px",
+    borderRadius: "8px",
+    border: "1px solid #d1d5db",
+    background: p.confirmado ? "#dcfce7" : "#ffffff",
+    color: "#111827",
+    fontSize: "14px"
+  }}
+/>
 
     {/* BOTÓN ELIMINAR */}
     <button
@@ -446,8 +510,9 @@ fontWeight: "500"
             onClick={() => {
               updateGrupo({
                 personas: [...selected.personas, {
-  nombre: "Nueva persona",
-  confirmado: false
+  nombre: "",
+  confirmado: false,
+  recuerdo: false
 }]
               });
             }}

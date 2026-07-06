@@ -3,9 +3,10 @@ import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Grupos from "./pages/Grupos/Grupos";
 import Mesas from "./pages/Mesas/Mesas";
-
+import Recuerdos from "./pages/Recuerdos/Recuerdos";
 function App() {
   const [page, setPage] = React.useState("dashboard");
+  const [refresh, setRefresh] = React.useState(0);
 
   // 👇 Invitados
  const gruposGuardados = JSON.parse(localStorage.getItem("grupos")) || [];
@@ -25,6 +26,16 @@ const pendientes = total - confirmados;
 // invitaciones
 const totalFisicas = gruposGuardados.filter(g => g.invitacion === "fisica").length;
 const totalDigitales = gruposGuardados.filter(g => g.invitacion === "digital").length;
+const totalRecuerdos = todasLasPersonas.filter(
+  p => p.recuerdo
+).length;
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    setRefresh(r => r + 1);
+  }, 500);
+
+  return () => clearInterval(interval);
+}, []);
 
   function getCountdown() {
     const weddingDate = new Date("2027-03-13");
@@ -45,40 +56,7 @@ const totalDigitales = gruposGuardados.filter(g => g.invitacion === "digital").l
 if (page === "mesas") {
   return <Mesas />;
 }
-    if (page === "invitados") {
-      return (
-        <>
-          <h1 style={styles.title}>Invitados 👥</h1>
-
-          <div style={styles.table}>
-            {invitados.map((i, index) => (
-              <div key={index} style={styles.row}>
-                <span>{i.nombre}</span>
-                <span>{i.familia}</span>
-
-                <button
-                  onClick={() => {
-                    invitados[index].confirmado = !invitados[index].confirmado;
-                    window.location.reload();
-                  }}
-                  style={{
-                    padding: "5px 10px",
-                    borderRadius: "6px",
-                    border: "none",
-                    cursor: "pointer",
-                    background: i.confirmado ? "green" : "#ccc",
-                    color: "white"
-                  }}
-                >
-                  {i.confirmado ? "Confirmado" : "Pendiente"}
-                </button>
-              </div>
-            ))}
-          </div>
-        </>
-      );
-    }
-
+    
 if (page === "invitaciones") {
 
   const gruposGuardados = JSON.parse(localStorage.getItem("grupos")) || [];
@@ -103,13 +81,9 @@ if (page === "invitaciones") {
   );
 }
 
-    if (page === "mesas") {
-      return <h1 style={styles.title}>Mesas 🪑 (en construcción)</h1>;
-    }
-
-    if (page === "recuerdos") {
-      return <h1 style={styles.title}>Recuerdos 🎁 (en construcción)</h1>;
-    }
+       if (page === "recuerdos") {
+  return <Recuerdos />;
+}
 
     if (page === "config") {
       return <h1 style={styles.title}>Configuración ⚙ (en construcción)</h1>;
@@ -119,13 +93,17 @@ if (page === "invitaciones") {
   }
 
   return (
-    <div style={styles.page}>
-      <div style={styles.florLayerTop}></div>
-      <div style={styles.florLayerBottom}></div>
+  <div style={styles.page}>
+    <div style={styles.florLayerTop}></div>
+    <div style={styles.florLayerBottom}></div>
 
-      <Sidebar page={page} setPage={setPage} />
+    <Sidebar
+      page={page}
+      setPage={setPage}
+      totalRecuerdos={totalRecuerdos}
+    />
 
-      <div style={styles.main}>
+    <div style={styles.main}>
         <div style={styles.header}>
           <div style={styles.names}>
             Leonardo <span style={styles.heart}>❤</span> Gema
